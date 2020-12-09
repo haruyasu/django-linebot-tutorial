@@ -27,7 +27,7 @@ class CallbackView(View):
         try:
             # 署名を検証して、問題なければhandleに定義されている関数を呼び出す
             handler.handle(body, signature)
-        except InvalidSignatureError
+        except InvalidSignatureError:
             # 署名検証で失敗した場合は、例外をあげる
             return HttpResponseBadRequest()
         except LineBotApiError as e:
@@ -42,7 +42,7 @@ class CallbackView(View):
     # csrf_tokenを渡していないpostメソッドは403エラーになるため
     @method_decorator(csrf_exempt)
     def dispatch(self, *args, **kwargs):
-        return super(CallbackView, self).dispath(*args, **kwargs)
+        return super(CallbackView, self).dispatch(*args, **kwargs)
 
     # staticmethod関数は、インスタンス化せずに呼び出せる関数のこと
     # handlerのaddメソッドで、リクエストのイベント毎に実行する関数を記述
